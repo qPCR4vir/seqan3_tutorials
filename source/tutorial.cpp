@@ -20,8 +20,11 @@ int main()
         // Create a /tmp/seq.fasta file.
         seqan3::sequence_file_output file_out{filename};
  
-        file_out.emplace_back("ACGTGATG"_dna5, std::string{"seq1"});
-        file_out.emplace_back("AGTGATACT"_dna5, std::string{"seq2"});
+        file_out.emplace_back("ATgAgATAgAAgTCTACCTggCCTTCCAgACCATgCTCgCAgAgAAACTTCAgCTCTCCACTg"
+                              "CCgTgAAggAAATgCgTTTCTATggCgTgTCgggAgTgACAgCAAATgACCTCCgCACTgCCgA"
+                              "AgCCATggTCAgAAgCC"_dna5, std::string{"target"});
+        file_out.emplace_back("gCCTTCCAgACCATgCTC"_dna5, std::string{"fw"});
+        file_out.emplace_back("AgTgCggAggTCATTTgC"_dna5, std::string{"rv"});
     }
  
     // Initialise a file input object and a vector
@@ -35,6 +38,20 @@ int main()
  
     // Call a global pairwise alignment with edit distance and traceback.
     for (auto && res : align_pairwise(std::tie(sequences[0], sequences[1]),
+                                      seqan3::align_cfg::method_global{} |
+                                      seqan3::align_cfg::edit_scheme |
+                                      seqan3::align_cfg::output_alignment{} |
+                                      seqan3::align_cfg::output_score{}))
+    {
+        // Print the resulting score and the alignment.
+        seqan3::debug_stream << res.score() << '\n';      // => -4
+        seqan3::debug_stream << res.alignment() << '\n';  // =>       0     .    :
+                                                          //            ACGTGATG--
+                                                          //            | |||||
+                                                          //            A-GTGATACT
+    }
+        // Call a global pairwise alignment with edit distance and traceback.
+    for (auto && res : align_pairwise(std::tie(sequences[0], sequences[2]),
                                       seqan3::align_cfg::method_global{} |
                                       seqan3::align_cfg::edit_scheme |
                                       seqan3::align_cfg::output_alignment{} |
