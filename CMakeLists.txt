@@ -8,5 +8,5 @@ list (APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../ExtLib/seqan3/bui
 find_package (seqan3 3.0 REQUIRED)
  
 # build app with seqan3
-add_executable (hello_world source/hello_world.cpp)
-target_link_libraries (hello_world seqan3::seqan3)
+add_executable (tutorial source/tutorial.cpp)
+target_link_libraries (tutorial seqan3::seqan3)
