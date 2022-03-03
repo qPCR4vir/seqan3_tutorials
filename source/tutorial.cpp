@@ -14,8 +14,8 @@ int main()
 {
     using namespace seqan3::literals;
  
-    auto tmp_dir = std::filesystem::temp_directory_path();
-    std::string filename{tmp_dir/"seq.fasta"};
+    auto filename = std::filesystem::temp_directory_path()/"seq.fasta";
+    
     {
         // Create a /tmp/seq.fasta file.
         seqan3::sequence_file_output file_out{filename};

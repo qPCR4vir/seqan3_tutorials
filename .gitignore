@@ -32,6 +32,7 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 .vs/
 *.VC.db
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
